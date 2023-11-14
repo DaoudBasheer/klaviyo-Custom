@@ -1,0 +1,164 @@
+
+<a class="klaviyo-bis-trigger" href="#">Notify Me When Available</a>
+
+ var product={{product|json}}
+  // console.log(product);
+// Add an event listener for variant radio button selection
+//solve problem notify button not shown on variant change
+
+
+
+
+    var variantRadioButtons = document.querySelectorAll('input[type="radio"]');
+    // console.log(variantRadioButtons);
+    variantRadioButtons.forEach(function(radioButton) {
+       
+        radioButton.addEventListener('click', function() {
+
+            if (radioButton.checked) {
+                // Check if the selected variant is out of stock
+                 if (radioButton.getAttribute('quantity')=="true") {
+                    klaviyo.open_back_in_stock_modal("{product_name}");
+                    document.querySelector('.btn').style.display="none";
+                 }else{
+
+                  document.querySelector('.btn').style.display="inline-block";
+                 }
+            }
+        });
+    });
+
+    <script src="https://a.klaviyo.com/media/js/onsite/onsite.js"></script>
+<script>
+    var klaviyo = klaviyo || [];
+    klaviyo.init({
+        account: "PQASYP",
+        platform: "shopify"
+    });
+
+    klaviyo.enable("backinstock", {
+        trigger: {
+            // These settings control the appearance of the Notify button on the product page
+            product_page_text: "Notify Me When Available",
+            product_page_class: "btn",
+            product_page_text_align: "center",
+            product_page_margin: "0px",
+            replace_anchor: false
+        },
+        modal: {
+            // Customize the appearance of the back-in-stock modal
+            headline: "{product_name}",
+            body_content: "Register to receive a notification when this item comes back in stock.",
+            email_field_label: "Email",
+            button_label: "Notify me when available",
+            subscription_success_label: "You're in! We'll let you know when it's back.",
+            footer_content: '',
+            additional_styles: "@import url('https://fonts.googleapis.com/css?family=Helvetica+Neue');",
+            drop_background_color: "#000",
+            background_color: "#fff",
+            text_color: "#222",
+            button_text_color: "#fff",
+            button_background_color: "#439fdb",
+            close_button_color: "#ccc",
+            error_background_color: "#fcd6d7",
+            error_text_color: "#C72E2F",
+            success_background_color: "#d3efcd",
+            success_text_color: "#1B9500"
+        }
+    });
+
+
+
+
+
+  // var _learnq = _learnq || [];
+
+  // var item = {
+  //   Name: {{ product.title|json }},
+  //   ProductID: {{ product.id|json }},
+  //   Categories: {{ product.collections|map:'title'|json }},
+  //   ImageURL: "https:{{ product.featured_image.src|img_url:'grande' }}",
+  //   URL: "{{ shop.secure_url }}{{ product.url }}",
+  //   Brand: {{ product.vendor|json }},
+  //   Price: {{ product.price|money|json }},
+  //   CompareAtPrice: {{ product.compare_at_price_max|money|json }}
+  // };
+
+  // _learnq.push(['track', 'Viewed Product', item]);
+  // _learnq.push(['trackViewedItem', {
+  //   Title: item.Name,
+  //   ItemId: item.ProductID,
+  //   Categories: item.Categories,
+  //   ImageUrl: item.ImageURL,
+  //   Url: item.URL,
+  //   Metadata: {
+  //     Brand: item.Brand,
+  //     Price: item.Price,
+  //     CompareAtPrice: item.CompareAtPrice
+  //   }
+  // }]);
+  
+
+    var product={{product | json}}
+    var variants=product.variants;
+    console.log(variants);
+
+    var variantRadioButtons = document.querySelectorAll('input[type="radio"]');
+    // console.log(variantRadioButtons);
+    variantRadioButtons.forEach(function(radioButton) {
+       
+        radioButton.addEventListener('click', function() {
+
+            if (radioButton.checked) {
+                // Check if the selected variant is out of stock
+                 if (radioButton.getAttribute('quantity')=="true") {
+                    klaviyo.open_back_in_stock_modal("{product_name}");
+                    document.querySelector('.btn').style.display="none";
+                 }else{
+
+                  document.querySelector('.btn').style.display="inline-block";
+                 }
+            }
+        });
+    });
+    
+  var select=document.querySelector('select[name="id"]');
+  console.log(select);
+  
+  select.addEventListener("change", function() {
+    console.log("hy");
+   var selectedOption = select.options[select.selectedIndex];
+    console.log(selectedOption);
+  })
+
+//   document.addEventListener("DOMContentLoaded", function() {
+// var ul1=document.querySelector('ul.options-size'); 
+//   var all=ul1.getElementsByTagName('li'); 
+    
+//   for(var i=0; i<all.length;i++){
+//     all[i].addEventListener("click",function(){
+      
+//     })
+//   };
+// });
+document.addEventListener("DOMContentLoaded", function() {
+  var ul1 = document.querySelector('ul.options-size');
+  var all = ul1.getElementsByTagName('li');
+  var liArray = Array.from(all);
+
+  for (var i = 0; i < liArray.length; i++) {
+    liArray[i].addEventListener("click", function() {
+      var index = liArray.indexOf(this);
+      
+     var isAvailable=variants[index].available;
+      console.log(isAvailable);
+      if(isAvailable==true){
+        document.querySelector('.klaviyo-bis-trigger').style.display="none";
+         // klaviyo.open_back_in_stock_modal("{product_name}");
+      
+      }else{
+      document.querySelector('.klaviyo-bis-trigger').style.display="inline-block";
+      }
+    });
+  }
+});
